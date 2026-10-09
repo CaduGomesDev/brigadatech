@@ -1,0 +1,29 @@
+# Dependências
+node_modules/
+
+# Build de produção
+dist/
+
+# Variáveis de ambiente (NUNCA versionar)
+.env
+.env.*
+!.env.example
+
+# Artefatos de deploy
+.vercel
+supabase/.temp
+
+# Arquivos locais do Vite
+*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editores e SO
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/settings.json

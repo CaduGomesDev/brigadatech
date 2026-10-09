@@ -1,0 +1,382 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────
+   Tailwind v4 — theme tokens
+   Todas as cores brand-*, fontes, sombras e
+   animações migradas de tailwind.config.js
+───────────────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-brand-red:        #C40018;
+  --color-brand-red-dark:   #9B0013;
+  --color-brand-red-light:  #E8001F;
+  --color-brand-black:      #0B0C10;
+  --color-brand-gray-900:   #161925;
+  --color-brand-gray-800:   #1E2235;
+  --color-brand-gray-700:   #252A3A;
+  --color-brand-gray-600:   #2E3347;
+  --color-brand-gray-500:   #3D4460;
+  --color-brand-gray-400:   #64748B;
+  --color-brand-gray-300:   #94A3B8;
+  --color-brand-gray-200:   #CBD5E1;
+  --color-brand-gray-100:   #E2E8F0;
+
+  /* Font */
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Shadows */
+  --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-red-glow:  0 0 20px rgba(196, 0, 24, 0.3);
+
+  /* Animations */
+  --animate-fade-in:   fadeIn 0.2s ease-in-out;
+  --animate-slide-in:  slideIn 0.3s ease-out;
+  --animate-pulse-red: pulseRed 2s infinite;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes slideIn {
+    from { transform: translateY(-10px); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+  }
+
+  @keyframes pulseRed {
+    0%, 100% { box-shadow: 0 0 0 0   rgba(196, 0, 24, 0.4); }
+    50%       { box-shadow: 0 0 0 8px rgba(196, 0, 24, 0);   }
+  }
+
+  /* Nav item active glow */
+  --animate-nav-glow: navItemGlow 3s ease-in-out infinite;
+
+  @keyframes navItemGlow {
+    0%, 100% { box-shadow: inset 0 0 16px rgba(196, 0, 24, 0.06); }
+    50%       { box-shadow: inset 0 0 28px rgba(196, 0, 24, 0.13), 0 0 10px rgba(196, 0, 24, 0.06); }
+  }
+
+  @keyframes eraseRTL {
+    0%        { clip-path: inset(0 0%   0 0); opacity: 1; }
+    70%       { clip-path: inset(0 100% 0 0); opacity: 1; }
+    71%       { clip-path: inset(0 100% 0 0); opacity: 0; }
+    72%       { clip-path: inset(0 0%   0 0); opacity: 0; }
+    100%      { clip-path: inset(0 0%   0 0); opacity: 1; }
+  }
+
+  /* Breathing glow — login card */
+  --animate-breathe-login: breatheLogin 4s ease-in-out infinite;
+
+  @keyframes breatheLogin {
+    0%, 100% {
+      box-shadow:
+        0 0 12px rgba(196, 0, 24, 0.08),
+        0 32px 80px -20px rgba(0, 0, 0, 0.85);
+    }
+    50% {
+      box-shadow:
+        0 0 24px rgba(196, 0, 24, 0.16),
+        0 0 48px rgba(196, 0, 24, 0.05),
+        0 32px 80px -20px rgba(0, 0, 0, 0.85);
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────
+   Dark mode via classe .dark  (mesma lógica do
+   darkMode: 'class' que estava no tailwind.config)
+───────────────────────────────────────────────── */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@keyframes shiny {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.animate-shiny {
+  animation: shiny 6s linear infinite;
+}
+
+/* ─────────────────────────────────────────────────
+   Base styles
+───────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  body {
+    @apply bg-brand-black text-white;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Custom scrollbar — desktop only */
+  @media (min-width: 768px) {
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      @apply bg-brand-gray-900;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      @apply bg-brand-gray-600 rounded-full;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      @apply bg-brand-gray-500;
+    }
+  }
+
+  ::selection {
+    background-color: rgba(196, 0, 24, 0.3);
+    color: white;
+  }
+
+  input[type="date"] {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    color-scheme: dark;
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    z-index: 0;
+  }
+
+  /* Ícone do calendário — vermelho no tema escuro */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.5);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: filter 0.15s ease, opacity 0.15s ease;
+    padding: 0;
+    margin-left: 4px;
+  }
+
+  input[type="date"]:focus::-webkit-calendar-picker-indicator,
+  input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    filter: invert(20%) sepia(100%) saturate(5000%) hue-rotate(340deg) opacity(0.9);
+  }
+
+  /* Separadores "/" entre dia/mês/ano */
+  input[type="date"]::-webkit-datetime-edit-text {
+    color: #6B6B6B;
+    padding: 0 1px;
+  }
+
+  /* Campos numéricos dd / mm / aaaa — cor clara para contraste no fundo escuro */
+  input[type="date"]::-webkit-datetime-edit-day-field,
+  input[type="date"]::-webkit-datetime-edit-month-field,
+  input[type="date"]::-webkit-datetime-edit-year-field {
+    color: #C4C4C4;
+  }
+
+  /* Campo ativo (editando) recebe destaque brand-red */
+  input[type="date"]::-webkit-datetime-edit-day-field:focus,
+  input[type="date"]::-webkit-datetime-edit-month-field:focus,
+  input[type="date"]::-webkit-datetime-edit-year-field:focus {
+    background-color: #C40018;
+    color: #ffffff;
+    border-radius: 2px;
+    outline: none;
+  }
+
+  /* Garante que o wrapper interno não quebre o layout */
+  input[type="date"]::-webkit-datetime-edit {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    min-width: 0;
+  }
+
+  input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    min-width: 0;
+    padding: 0;
+  }
+
+  @media (max-width: 639px) {
+    input[type="date"] {
+      font-size: 14px;
+    }
+  }
+
+  /* Checkbox "Em Manutenção" — tema escuro com acento amarelo */
+  .checkbox-manutencao {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.25rem;
+    border: 1.5px solid rgba(250, 204, 21, 0.45);
+    background-color: #242424;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .checkbox-manutencao:checked {
+    background-color: #facc15;
+    border-color: #facc15;
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%230a0a0a' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .checkbox-manutencao:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.18);
+  }
+
+  .checkbox-manutencao:hover:not(:checked) {
+    border-color: rgba(250, 204, 21, 0.75);
+    background-color: #2e2e2e;
+  }
+
+  button,
+  a {
+    touch-action: manipulation;
+  }
+
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────
+   Components
+───────────────────────────────────────────────── */
+@layer components {
+  .accent-line {
+    @apply h-px bg-gradient-to-r from-transparent via-brand-red to-transparent;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl;
+  }
+
+  .logo-glow {
+    box-shadow: 0 0 14px rgba(196, 0, 24, 0.3), 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-item-active-glow {
+    animation: navItemGlow 3s ease-in-out infinite;
+  }
+
+  .table-scroll {
+    @apply overflow-x-auto;
+    scrollbar-width: thin;
+    scrollbar-color: #2E2E2E transparent;
+  }
+}
+
+/* ─────────────────────────────────────────────────
+   Utilities
+───────────────────────────────────────────────── */
+@layer utilities {
+  .text-gradient-red {
+    background: linear-gradient(135deg, #C40018, #FF4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .border-glow-red {
+    box-shadow: 0 0 0 1px rgba(196, 0, 24, 0.5), 0 0 20px rgba(196, 0, 24, 0.15);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .no-overflow {
+    overflow: hidden;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────
+   Reduced motion — respeita preferência do SO
+───────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-breathe-login {
+    animation: none;
+    box-shadow:
+      0 0 16px rgba(196, 0, 24, 0.10),
+      0 32px 80px -20px rgba(0, 0, 0, 0.85);
+  }
+}
+
+/* ─────────────────────────────────────────────────
+   Recharts — dark theme overrides
+   Garante que nenhum tooltip/cursor use fundo branco
+───────────────────────────────────────────────── */
+
+/* Wrapper do tooltip: sem borda/fundo padrão */
+.recharts-tooltip-wrapper {
+  outline: none !important;
+  border: none !important;
+  background: transparent !important;
+  filter: none !important;
+}
+
+/* Tooltip padrão (fallback quando não há content customizado) */
+.recharts-default-tooltip {
+  background-color: #161925 !important;
+  border: 1px solid rgba(196, 0, 24, 0.45) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 0 24px rgba(196, 0, 24, 0.15) !important;
+  padding: 10px 12px !important;
+}
+
+.recharts-tooltip-label {
+  color: #9A9A9A !important;
+  font-size: 11px !important;
+  margin-bottom: 6px !important;
+}
+
+.recharts-tooltip-item {
+  color: #C40018 !important;
+  font-weight: 600 !important;
+}
+
+/* Cursor do BarChart — remove o cinza/branco padrão */
+.recharts-bar-background-rectangle {
+  fill: rgba(196, 0, 24, 0.05) !important;
+}
+
+/* Hover nos segmentos do PieChart — sem borda branca */
+.recharts-sector:focus,
+.recharts-sector:focus-visible {
+  outline: none !important;
+}
+
+/* Remove any white fill leaking from Recharts internals */
+.recharts-surface,
+.recharts-layer {
+  background: transparent !important;
+}
