@@ -21,6 +21,7 @@ import { GinasticaLaboralPage } from './pages/GinasticaLaboralPage'
 import { TermosPage } from './pages/TermosPage'
 import { PrivacidadePage } from './pages/PrivacidadePage'
 import { ExtintoresPage } from './pages/ExtintoresPage'
+import { MateriaisPage } from './pages/MateriaisPage'
 import { NotificacoesPage } from './pages/NotificacoesPage'
 import { RelatorioGerencialPage } from './pages/RelatorioGerencialPage'
 
@@ -74,6 +75,7 @@ function AppRoutes() {
       <Route path="/ginastica-laboral" element={<ProtectedRoute><GinasticaLaboralPage /></ProtectedRoute>} />
       <Route path="/privacidade" element={<ProtectedRoute><PrivacidadePage /></ProtectedRoute>} />
       <Route path="/extintores" element={<ProtectedRoute><ExtintoresPage /></ProtectedRoute>} />
+      <Route path="/materiais" element={<ProtectedRoute><MateriaisPage /></ProtectedRoute>} />
       <Route path="/notificacoes" element={<ProtectedRoute><NotificacoesPage /></ProtectedRoute>} />
       <Route path="/relatorio-gerencial" element={<ProtectedRoute><RelatorioGerencialPage /></ProtectedRoute>} />
 

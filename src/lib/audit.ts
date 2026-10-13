@@ -17,6 +17,10 @@ export type AcaoAuditoria =
   | 'update_extintor'
   | 'delete_extintor'
   | 'view_extintor'
+  | 'insert_material'
+  | 'update_material'
+  | 'delete_material'
+  | 'view_material'
   | 'create_user'
 
 export async function logAuditoria(

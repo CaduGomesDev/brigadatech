@@ -85,6 +85,7 @@ export interface Extintor {
   ultima_inspecao: string
   situacao: SituacaoExtintor
   observacoes: string | null
+  alerta_vencimento_enviado: boolean
   created_by: string | null
   created_at: string
   updated_at: string
@@ -98,6 +99,60 @@ export interface HistoricoExtintor {
   usuario_id: string | null
   usuario_nome: string | null
   detalhes: Record<string, unknown> | null
+  created_at: string
+}
+
+export type TipoItemMaterial = 'Consumível' | 'Equipamento'
+export type EstadoConservacao = 'Bom' | 'Regular' | 'Ruim'
+
+export interface MaterialBrigada {
+  id: string
+  nome: string
+  categoria: string
+  tipo_item: TipoItemMaterial
+  descricao: string | null
+  lote: string | null
+  quantidade_atual: number
+  unidade_medida: string
+  estoque_minimo: number
+  local_armazenamento: string
+  responsavel: string
+  observacoes: string | null
+  data_fabricacao: string | null
+  data_validade: string | null
+  numero_patrimonio: string | null
+  estado_conservacao: EstadoConservacao | null
+  data_ultima_inspecao: string | null
+  data_proxima_manutencao: string | null
+  alerta_vencimento_enviado: boolean
+  alerta_manutencao_enviado: boolean
+  alerta_estoque_enviado: boolean
+  created_by: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface HistoricoMaterial {
+  id: string
+  material_id: string | null
+  material_nome: string
+  acao: string
+  usuario_id: string | null
+  usuario_nome: string | null
+  detalhes: Record<string, unknown> | null
+  created_at: string
+}
+
+export type TipoAnexoMaterial = 'Foto' | 'Nota Fiscal' | 'Certificado' | 'Laudo de Inspeção' | 'Outro'
+
+export interface AnexoMaterial {
+  id: string
+  material_id: string
+  nome_arquivo: string
+  tipo: TipoAnexoMaterial
+  caminho: string
+  tamanho_bytes: number | null
+  uploaded_by: string | null
   created_at: string
 }
 

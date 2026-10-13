@@ -6,6 +6,7 @@ import { DashboardStats, SITUACOES_ROTINA } from '../types'
 import { Layout } from '../components/layout/Layout'
 import { DashboardCards } from '../components/dashboard/DashboardCards'
 import { DashboardCharts } from '../components/dashboard/DashboardCharts'
+import { MateriaisAlertBanner } from '../components/dashboard/MateriaisAlertBanner'
 import { useAuth } from '../contexts/AuthContext'
 import { formatChartDate } from '../utils/formatters'
 
@@ -124,6 +125,8 @@ export function DashboardPage() {
             {format(new Date(), "EEEE', 'dd/MM/yyyy", { locale: ptBR })}
           </p>
         </div>
+
+        <MateriaisAlertBanner />
 
         <DashboardCards stats={stats} loading={loading} />
         <DashboardCharts

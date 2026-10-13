@@ -27,7 +27,7 @@ export function Logo({ size = 'md', variant = 'full' }: LogoProps) {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <span className={`${brigSize} font-black tracking-tight leading-none`}>
+          <span className={`${brigSize} font-black tracking-tight leading-tight`}>
             <span style={{ color: '#ffffff' }}>Brigada</span>
             <span className="animate-shiny" style={shinyStyle}>Tech</span>
           </span>
@@ -37,7 +37,7 @@ export function Logo({ size = 'md', variant = 'full' }: LogoProps) {
               width: hovered ? 144 : 40,
               borderRadius: 99,
               background: '#C40018',
-              transition: 'width 0.4s cubic-bezier(0.16,1,0.3,1)',
+              transition: 'width 1.1s cubic-bezier(0.22,1,0.36,1)',
             }}
           />
         </div>

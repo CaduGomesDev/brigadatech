@@ -6,8 +6,8 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useToast } from '../../contexts/ToastContext'
 
 const shinyStyle: React.CSSProperties = {
-  backgroundImage: 'linear-gradient(to right, #050505 0%, #5C0000 12.5%, #FF8080 32.5%, #FF1744 50%, #5C0000 67.5%, #050505 87.5%, #050505 100%)',
-  backgroundSize: '200% auto',
+  backgroundImage: 'linear-gradient(100deg, #DC2626 0%, #DC2626 42%, #FF1744 47%, #FFFFFF 50%, #FF1744 53%, #DC2626 58%, #DC2626 100%)',
+  backgroundSize: '300% auto',
   WebkitBackgroundClip: 'text',
   backgroundClip: 'text',
   color: 'transparent',
@@ -99,9 +99,8 @@ export function LoginForm() {
           Sistema de Gestão de Brigada
         </p>
 
-        <h1 style={{ fontSize: 'clamp(42px, 5.5vw, 72px)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.03em', margin: 0 }}>
+        <h1 style={{ fontSize: 'clamp(34px, 4.2vw, 60px)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.03em', margin: 0 }}>
           <span style={{ color: '#ffffff' }}>Brigada</span>
-          <br />
           <span className="animate-shiny" style={shinyStyle}>Tech</span>
         </h1>
 
@@ -109,8 +108,17 @@ export function LoginForm() {
           width: 48, height: 3,
           background: '#DC2626',
           borderRadius: 2,
-          margin: '24px 0 0',
+          margin: '24px 0 32px',
         }} />
+
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          style={{ fontSize: 14, lineHeight: '28px', color: 'rgba(255,255,255,0.55)' }}
+        >
+          Resposta rápida e organizada<br />para proteger vidas<br />dentro da sua empresa.
+        </motion.p>
       </motion.div>
 
       {/* Card transparente — direita */}
@@ -131,12 +139,22 @@ export function LoginForm() {
         }}
       >
 
+        <motion.p
+          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.22 }}
+          className="font-semibold uppercase"
+          style={{ fontSize: 11, color: '#DC2626', letterSpacing: '0.18em', marginBottom: 10 }}
+        >
+          Acesso Seguro
+        </motion.p>
+
         <motion.h2
           initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.30 }}
-          style={{ fontSize: 28, fontWeight: 700, color: '#ffffff', marginBottom: 28, letterSpacing: '-0.01em' }}
+          style={{ fontSize: 28, fontWeight: 700, marginBottom: 28, letterSpacing: '-0.01em' }}
         >
-          Entrar
+          <span style={{ color: '#ffffff' }}>Bem-vindo</span>{' '}
+          <span style={{ color: 'rgba(255,255,255,0.45)' }}>de volta.</span>
         </motion.h2>
 
         <motion.form
@@ -234,13 +252,13 @@ export function LoginForm() {
 
         {/* Versão */}
         <p className="text-center mt-4" style={{ fontSize: 10, color: 'rgba(255,255,255,0.15)' }}>
-          CG <span style={{ marginLeft: 4 }}>✦</span>
+          © {new Date().getFullYear()} BrigadaTech. Todos os direitos reservados.
         </p>
       </motion.div>
 
       <style>{`
-        @keyframes shiny { 0%{background-position:-200% center} 100%{background-position:200% center} }
-        .animate-shiny { animation: shiny 4s linear infinite; }
+        @keyframes shiny { 0%{background-position:200% center} 100%{background-position:-200% center} }
+        .animate-shiny { animation: shiny 7s linear infinite; }
       `}</style>
     </div>
   )

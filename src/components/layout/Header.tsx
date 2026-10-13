@@ -3,6 +3,7 @@ import { LogOut, User, ChevronDown, Menu } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useToast } from '../../contexts/ToastContext'
 import { useNavigate } from 'react-router-dom'
+import { GlobalSearch } from './GlobalSearch'
 
 interface HeaderProps {
   title?: string
@@ -23,7 +24,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
 
   return (
     <header className="h-14 md:h-16 flex items-center justify-between gap-3 px-4 md:px-6 bg-transparent border-b border-white/10 flex-shrink-0 relative z-10">
-      {/* Left: hamburger (mobile) */}
+      {/* Left: hamburger (mobile) + search */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuToggle}
@@ -32,6 +33,9 @@ export function Header({ onMenuToggle }: HeaderProps) {
         >
           <Menu size={20} />
         </button>
+        <div className="hidden md:block w-64">
+          <GlobalSearch />
+        </div>
       </div>
 
       {/* Right: user menu */}

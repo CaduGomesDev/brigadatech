@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import {
   Search, Plus, Eye, Pencil, Trash2, RefreshCw,
   Flame, ChevronLeft, ChevronRight, Clock,
+  ClipboardList, CheckCircle2, AlertTriangle, Wrench, XCircle,
 } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { Extintor, ChecklistItem, SituacaoExtintor, HistoricoExtintor } from '../../types'
@@ -339,11 +340,11 @@ export function ControleExtintores() {
 
       {/* Dashboard de resumo */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        <StatCard label="Total"         value={stats.total}       color="neutral" />
-        <StatCard label="Conformes"      value={stats.conforme}    color="green"   />
-        <StatCard label="Não Conformes"  value={stats.naoConforme} color="orange"  />
-        <StatCard label="Em Manutenção"  value={stats.manutencao}  color="yellow"  />
-        <StatCard label="Vencidos"       value={stats.vencido}     color="red"     />
+        <StatCard label="Total"          value={stats.total}       color="neutral" icon={<ClipboardList size={18} />} />
+        <StatCard label="Conformes"      value={stats.conforme}    color="green"   icon={<CheckCircle2 size={18} />} />
+        <StatCard label="Não Conformes"  value={stats.naoConforme} color="orange"  icon={<AlertTriangle size={18} />} />
+        <StatCard label="Em Manutenção"  value={stats.manutencao}  color="yellow"  icon={<Wrench size={18} />} />
+        <StatCard label="Vencidos"       value={stats.vencido}     color="red"     icon={<XCircle size={18} />} />
       </div>
 
       {/* Tabela principal */}
@@ -679,25 +680,23 @@ function HistoricoExtintoresSection() {
 
 type StatColor = 'neutral' | 'green' | 'orange' | 'yellow' | 'red'
 
-function StatCard({ label, value, color }: { label: string; value: number; color: StatColor }) {
-  const styles: Record<StatColor, string> = {
-    neutral: 'bg-brand-gray-800 border-brand-gray-700',
-    green:   'bg-green-500/10  border-green-500/20',
-    orange:  'bg-orange-500/10 border-orange-500/20',
-    yellow:  'bg-yellow-500/10 border-yellow-500/20',
-    red:     'bg-red-500/10    border-red-500/20',
-  }
-  const textStyles: Record<StatColor, string> = {
-    neutral: 'text-white',
-    green:   'text-green-400',
-    orange:  'text-orange-400',
-    yellow:  'text-yellow-400',
-    red:     'text-red-400',
+function StatCard({ label, value, color, icon }: { label: string; value: number; color: StatColor; icon: React.ReactNode }) {
+  const chipStyles: Record<StatColor, string> = {
+    neutral: 'bg-white/[0.06]    border-white/10      text-gray-300',
+    green:   'bg-green-500/10   border-green-500/20   text-green-400',
+    orange:  'bg-orange-500/10  border-orange-500/20  text-orange-400',
+    yellow:  'bg-yellow-500/10  border-yellow-500/20  text-yellow-400',
+    red:     'bg-red-500/10     border-red-500/20     text-red-400',
   }
   return (
-    <div className={`border rounded-2xl p-4 flex flex-col gap-1 animate-fade-in ${styles[color]}`}>
-      <p className="text-xs font-medium text-gray-500 truncate">{label}</p>
-      <p className={`text-2xl font-black tabular-nums ${textStyles[color]}`}>{value}</p>
+    <div className="bg-brand-gray-900 border border-brand-gray-700 rounded-2xl p-4 flex items-center gap-3 animate-fade-in hover:border-brand-gray-600 transition-colors duration-200 min-w-0">
+      <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${chipStyles[color]}`}>
+        {icon}
+      </div>
+      <div className="min-w-0">
+        <p className="text-2xl font-bold text-white leading-none">{value}</p>
+        <p className="text-xs font-medium text-gray-500 truncate mt-1">{label}</p>
+      </div>
     </div>
   )
 }

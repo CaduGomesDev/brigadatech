@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import {
   PlusCircle, LayoutDashboard,
   Users, Settings,
-  X, Dumbbell, ShieldCheck, Flame, Bell, ClipboardList,
+  X, Dumbbell, ShieldCheck, Flame, Bell, ClipboardList, Package,
 } from 'lucide-react'
 import { Logo } from '../ui/Logo'
 import { GlobalSearch } from './GlobalSearch'
@@ -25,6 +25,7 @@ const atendimentoItems: NavItem[] = [
   { to: '/chamados/novo',    icon: <PlusCircle size={20} />, label: 'Novo Atendimento' },
   { to: '/ginastica-laboral',icon: <Dumbbell size={20} />,   label: 'Ginástica Laboral' },
   { to: '/extintores',       icon: <Flame size={20} />,      label: 'Extintores' },
+  { to: '/materiais',        icon: <Package size={20} />,    label: 'Materiais' },
 ]
 
 const monitoramentoItems: NavItem[] = [
@@ -259,10 +260,6 @@ export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
       >
         <div className="flex items-center justify-center h-16 px-4 border-b border-white/10 flex-shrink-0">
           <Logo size="sm" variant="full" />
-        </div>
-
-        <div className="px-3 pt-3 flex-shrink-0">
-          <GlobalSearch />
         </div>
 
         <NavContent />
