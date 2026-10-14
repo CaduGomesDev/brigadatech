@@ -221,6 +221,19 @@
     }
   }
 
+  /* Campos numéricos — remove as setas nativas do navegador;
+     o stepper customizado (ChevronUp/ChevronDown) é renderizado em Input.tsx */
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   /* Checkbox "Em Manutenção" — tema escuro com acento amarelo */
   .checkbox-manutencao {
     appearance: none;

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { ChevronUp, ChevronDown } from 'lucide-react'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -10,6 +11,24 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export function Input({ label, error, hint, icon, iconRight, className = '', type, ...props }: InputProps) {
   const isDate = type === 'date'
+  const isNumber = type === 'number'
+  const numberRef = useRef<HTMLInputElement>(null)
+
+  const step = (e: React.MouseEvent, dir: 1 | -1) => {
+    e.preventDefault()
+    const input = numberRef.current
+    if (!input || props.disabled) return
+    const stepAmount = Number(props.step) || 1
+    const current = Number(input.value || 0)
+    let next = dir === 1 ? current + stepAmount : current - stepAmount
+    if (props.min !== undefined && next < Number(props.min)) next = Number(props.min)
+    if (props.max !== undefined && next > Number(props.max)) next = Number(props.max)
+
+    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
+    setter?.call(input, String(next))
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+    input.focus()
+  }
 
   return (
     <div className="flex flex-col gap-1.5 min-w-0 w-full">
@@ -26,6 +45,7 @@ export function Input({ label, error, hint, icon, iconRight, className = '', typ
           </div>
         )}
         <input
+          ref={isNumber ? numberRef : undefined}
           type={type}
           {...props}
           className={`
@@ -35,6 +55,7 @@ export function Input({ label, error, hint, icon, iconRight, className = '', typ
             px-4 py-2.5 h-11
             ${icon ? 'pl-10' : ''}
             ${iconRight ? 'pr-10' : ''}
+            ${isNumber ? 'pr-9' : ''}
             ${isDate ? 'date-input active:scale-[0.98] active:border-brand-red active:ring-1 active:ring-brand-red/60 active:[transition:none]' : ''}
             focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red/50
             transition-all duration-200
@@ -43,9 +64,31 @@ export function Input({ label, error, hint, icon, iconRight, className = '', typ
             ${className}
           `}
         />
-        {iconRight && (
+        {iconRight && !isNumber && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
             {iconRight}
+          </div>
+        )}
+        {isNumber && !props.disabled && (
+          <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex flex-col h-8 w-6 rounded-lg overflow-hidden border border-brand-gray-600/70 divide-y divide-brand-gray-600/70">
+            <button
+              type="button"
+              tabIndex={-1}
+              onClick={e => step(e, 1)}
+              className="flex-1 flex items-center justify-center text-gray-500 bg-brand-gray-700/60 hover:text-brand-red hover:bg-brand-gray-700 active:scale-90 transition-all duration-150"
+              aria-label="Aumentar"
+            >
+              <ChevronUp size={11} strokeWidth={2.75} />
+            </button>
+            <button
+              type="button"
+              tabIndex={-1}
+              onClick={e => step(e, -1)}
+              className="flex-1 flex items-center justify-center text-gray-500 bg-brand-gray-700/60 hover:text-brand-red hover:bg-brand-gray-700 active:scale-90 transition-all duration-150"
+              aria-label="Diminuir"
+            >
+              <ChevronDown size={11} strokeWidth={2.75} />
+            </button>
           </div>
         )}
       </div>
