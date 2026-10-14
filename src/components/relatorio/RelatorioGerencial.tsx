@@ -43,7 +43,7 @@ export function RelatorioGerencial() {
   const fetchChamados = useCallback(async () => {
     setLoading(true)
     let q = supabase
-      .from('chamados_brigada')
+      .from('chamados_brigada_resumo')
       .select('id, brigadista, colaborador_atendido, situacao, dados_atendimento, created_at', { count: 'exact' })
       .order('created_at', { ascending: false })
       .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)

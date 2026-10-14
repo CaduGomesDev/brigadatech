@@ -42,8 +42,8 @@ export function DashboardPage() {
         const thirtyDaysAgo = subDays(new Date(), 29).toISOString()
 
         const [{ data: allRaw }, { data: recentRaw }] = await Promise.all([
-          supabase.from('chamados_brigada').select('situacao, brigadista, created_at'),
-          supabase.from('chamados_brigada')
+          supabase.from('chamados_brigada_resumo').select('situacao, brigadista, created_at'),
+          supabase.from('chamados_brigada_resumo')
             .select('situacao, created_at')
             .gte('created_at', thirtyDaysAgo),
         ])

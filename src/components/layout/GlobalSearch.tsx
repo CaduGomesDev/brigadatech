@@ -72,7 +72,7 @@ export function GlobalSearch({ onNavigate }: GlobalSearchProps) {
     if (!profile || q.length < 2) { setPatients([]); return }
     setLoadingPatients(true)
     const { data } = await supabase
-      .from('chamados_brigada')
+      .from('chamados_brigada_resumo')
       .select('id, colaborador_atendido, situacao, created_at')
       .ilike('colaborador_atendido', `%${q}%`)
       .order('created_at', { ascending: false })
