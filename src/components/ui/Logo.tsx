@@ -45,7 +45,7 @@ export function Logo({ size = 'md', variant = 'full' }: LogoProps) {
       {variant === 'icon' && (
         <div className={`${iconSizeClass} rounded-[8px] overflow-hidden flex-shrink-0 flex items-center justify-center logo-glow`}>
           <img
-            src="/favicon.png?v=3"
+            src="/favicon.png?v=4"
             alt="BrigadaTech"
             className="h-full w-full object-cover"
           />
